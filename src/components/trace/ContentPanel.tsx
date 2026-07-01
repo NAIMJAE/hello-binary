@@ -42,6 +42,10 @@ type CodeLinesProps = {
   showLineNumbers?: boolean;
   activeLine?: number;
   relatedLines?: RelatedLine[];
+  /** false면 내부 가로 스크롤 없이 부모가 스크롤 처리 */
+  containScroll?: boolean;
+  /** trace 하이라이트 범례 (연습장 등 정적 표시에서는 false) */
+  showLegend?: boolean;
 };
 
 const relatedLineStyles: Record<
@@ -126,10 +130,12 @@ export function CodeLines({
   showLineNumbers = true,
   activeLine,
   relatedLines,
+  containScroll = true,
+  showLegend = true,
 }: CodeLinesProps) {
   return (
-    <div className="overflow-x-auto">
-      <CodeLineLegend relatedLines={relatedLines} />
+    <div className={containScroll ? "overflow-x-auto" : "min-w-max"}>
+      {showLegend && <CodeLineLegend relatedLines={relatedLines} />}
       <pre className="p-4 font-mono text-sm leading-7 text-slate-800">
         {lines.map((line, index) => {
           const lineNumber = index + 1;

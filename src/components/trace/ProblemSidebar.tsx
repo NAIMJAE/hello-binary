@@ -47,11 +47,11 @@ export function ProblemSidebar({
       <ContentPanel title="내 답안">
         <form className="p-3" onSubmit={handleSubmit}>
           <div className="overflow-x-auto rounded-lg border border-slate-200 bg-slate-50 px-3 py-1.5">
-            <input
-              className="w-full bg-transparent font-mono text-sm text-slate-800 outline-none placeholder:text-slate-400"
+            <textarea
+              className="w-full resize-y bg-transparent font-mono text-sm text-slate-800 outline-none placeholder:text-slate-400"
               disabled={solutionUnlocked}
               placeholder="정답을 입력하세요"
-              type="text"
+              rows={problem.answer.includes("\n") ? 3 : 2}
               value={userAnswer}
               onChange={(e) => setUserAnswer(e.target.value)}
             />
@@ -87,14 +87,26 @@ export function ProblemSidebar({
               initial={{ opacity: 0, y: 4 }}
             >
               {skipped ? (
-                <p>풀이 과정을 확인해 보세요. 정답은 <span className="font-mono font-semibold">{problem.answer}</span>입니다.</p>
+                <p>
+                  풀이 과정을 확인해 보세요.
+                  <br />
+                  정답은{" "}
+                  <span className="whitespace-pre-wrap font-mono font-semibold">
+                    {problem.answer}
+                  </span>
+                  입니다.
+                </p>
               ) : isCorrect ? (
                 <p>정답입니다! 오른쪽에서 풀이 과정을 확인해 보세요.</p>
               ) : (
                 <p>
-                  오답입니다. 입력: <span className="font-mono">{userAnswer}</span>
+                  오답입니다. 입력:{" "}
+                  <span className="whitespace-pre-wrap font-mono">{userAnswer}</span>
                   <br />
-                  정답: <span className="font-mono font-semibold">{problem.answer}</span>
+                  정답:{" "}
+                  <span className="whitespace-pre-wrap font-mono font-semibold">
+                    {problem.answer}
+                  </span>
                   <br />
                   <span className="mt-1 inline-block font-normal text-rose-700">
                     오른쪽에서 풀이 과정을 확인해 보세요.

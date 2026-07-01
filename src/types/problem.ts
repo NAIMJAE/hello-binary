@@ -49,6 +49,13 @@ export type TraceStep = {
   memory?: MemorySnapshot;
 };
 
+export type WorksheetConfig = {
+  variableRows: number;
+  memorySlots: number;
+  /** C 포인터·연결리스트 등 — 그림판 화살표 안내만 표시 */
+  showArrowHints?: boolean;
+};
+
 export type Problem = {
   id: string;
   slug: string;
@@ -64,4 +71,5 @@ export type Problem = {
   answer: string;
   explanation: string;
   traceSteps: TraceStep[];
+  worksheet?: WorksheetConfig;
 };

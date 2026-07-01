@@ -17,6 +17,10 @@ const C_POINTER_SLUGS = new Set([
   "linked-list-reverse-string-2025-2",
   "circular-queue-2025-2",
   "string-length-putchar-2025-3",
+  "char-array-insert-2025-1",
+  "malloc-2d-set-sum-2025-1",
+  "linked-list-reconnect-2025-1",
+  "struct-score-decrypt-2025-1",
 ]);
 
 const SKIP_CALL = new Set([

@@ -4,8 +4,10 @@ import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import { useMemo } from "react";
 import type { Problem } from "@/types/problem";
+import { answersMatch } from "@/lib/normalizeAnswer";
 import { mergeTraceMemory } from "@/lib/mergeTraceMemory";
 import { mergeTraceVariables } from "@/lib/mergeTraceVariables";
+import { openScratchWindow } from "@/lib/openScratchWindow";
 import { AnswerPanel } from "./AnswerPanel";
 import { ProblemSidebar } from "./ProblemSidebar";
 import { StepComment } from "./StepComment";
@@ -16,9 +18,10 @@ import { VariableWatcher } from "./VariableWatcher";
 type TraceViewerProps = {
   problem: Problem;
   listHref: string;
+  scratchBasePath: string;
 };
 
-export function TraceViewer({ problem, listHref }: TraceViewerProps) {
+export function TraceViewer({ problem, listHref, scratchBasePath }: TraceViewerProps) {
   const [stepIndex, setStepIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [solutionUnlocked, setSolutionUnlocked] = useState(false);
@@ -48,7 +51,7 @@ export function TraceViewer({ problem, listHref }: TraceViewerProps) {
   const handleSubmit = useCallback(
     (answer: string) => {
       setSkipped(false);
-      setIsCorrect(answer === problem.answer);
+      setIsCorrect(answersMatch(answer, problem.answer));
       unlockSolution();
     },
     [problem.answer, unlockSolution],
@@ -120,6 +123,13 @@ export function TraceViewer({ problem, listHref }: TraceViewerProps) {
         <div className="flex min-w-0 flex-1 flex-wrap items-center justify-between gap-x-4 gap-y-2">
           <h1 className="text-xl font-bold text-slate-900 sm:text-2xl">{problem.title}</h1>
           <div className="flex flex-wrap items-center gap-2 text-xs">
+            <button
+              className="rounded-lg border border-amber-200 bg-amber-50 px-2.5 py-1.5 text-xs font-medium text-amber-800 transition hover:border-amber-300 hover:bg-amber-100"
+              type="button"
+              onClick={() => openScratchWindow(scratchBasePath, problem.id, problem.slug)}
+            >
+              📝 연습장 열기
+            </button>
             <span className="rounded-full bg-slate-100 px-2.5 py-1 font-medium text-slate-600">
               {problem.source}
             </span>
@@ -149,9 +159,9 @@ export function TraceViewer({ problem, listHref }: TraceViewerProps) {
           {!solutionUnlocked && (
             <div className="flex min-h-[320px] flex-col items-center justify-center rounded-xl border border-dashed border-slate-300 bg-white p-8 text-center shadow-sm lg:min-h-[480px]">
               <p className="text-lg font-medium text-slate-700">풀이 과정</p>
-              <p className="mt-2 max-w-xs text-sm leading-relaxed text-slate-500">
-                정답을 제출하거나 &lsquo;모르겠어요&rsquo;를 누르면 코드 실행 과정을
-                단계별로 확인할 수 있습니다. 실행 중인 줄은 앰버색으로,
+              <p className="mt-2 max-w-sm text-sm leading-relaxed text-slate-500">
+                정답을 제출하거나 &lsquo;모르겠어요&rsquo;를 누르면, 한 줄씩 실행되는 과정을
+                건너뛰지 않고 단계별로 확인할 수 있습니다. 실행 중인 줄은 앰버색으로,
                 호출·참조하는 다른 줄은 별도 색으로 함께 표시됩니다.
               </p>
             </div>

@@ -18,12 +18,16 @@ export function RandomProblemButton({ problems, basePath }: RandomProblemButtonP
 
   return (
     <button
-      className="w-full rounded-xl border border-dashed border-amber-300 bg-amber-50 px-4 py-4 text-left transition hover:border-amber-400 hover:bg-amber-100/80"
+      className="group relative w-full overflow-hidden rounded-2xl border border-amber-200/70 bg-gradient-to-br from-amber-50 via-white to-orange-50/80 p-5 text-left shadow-sm ring-1 ring-amber-600/5 transition-all duration-300 hover:border-amber-300 hover:shadow-md hover:shadow-amber-100/50"
       type="button"
       onClick={handleClick}
     >
-      <p className="font-medium text-amber-900">🎲 랜덤 문제</p>
-      <p className="mt-1 text-sm text-amber-800/80">
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -left-6 -top-6 h-20 w-20 rounded-full bg-amber-200/30 blur-2xl transition group-hover:bg-amber-300/40"
+      />
+      <p className="relative font-semibold text-amber-900">🎲 랜덤 문제</p>
+      <p className="relative mt-1.5 text-sm text-amber-800/75">
         {problems.length}개 문제 중 무작위로 하나를 풀어보세요.
       </p>
     </button>

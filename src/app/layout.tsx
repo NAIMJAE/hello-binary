@@ -11,9 +11,9 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "hello-binary | 정보처리기사 실기 코드 Trace",
+  title: "hello-binary | 정보처리기사 실기 준비",
   description:
-    "코드가 실행되는 과정을 단계별로 보며 이해하는 정보처리기사 실기 학습 도구",
+    "한 줄도 건너뛰지 않고 코드 실행 흐름을 단계별로 보여 주는 정보처리기사 실기 학습 도구",
 };
 
 export default function RootLayout({

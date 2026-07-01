@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { TraceViewer } from "@/components/trace/TraceViewer";
+import { ScratchPage } from "@/components/scratch/ScratchPage";
 import { pythonProblemsBySlug } from "@/problems/python";
 
 type PageProps = {
@@ -10,7 +10,7 @@ export async function generateStaticParams() {
   return Object.keys(pythonProblemsBySlug).map((slug) => ({ slug }));
 }
 
-export default async function PythonProblemPage({ params }: PageProps) {
+export default async function PythonScratchPage({ params }: PageProps) {
   const { slug } = await params;
   const problem = pythonProblemsBySlug[slug];
 
@@ -18,9 +18,5 @@ export default async function PythonProblemPage({ params }: PageProps) {
     notFound();
   }
 
-  return (
-    <div className="min-h-screen bg-slate-50">
-      <TraceViewer listHref="/python" scratchBasePath="/python" problem={problem} />
-    </div>
-  );
+  return <ScratchPage problem={problem} />;
 }

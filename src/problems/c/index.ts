@@ -1,19 +1,27 @@
 import type { Problem } from "@/types/problem";
+import { charArrayInsert2025_1 } from "./char-array-insert-2025-1";
+import { malloc2dSetSum2025_1 } from "./malloc-2d-set-sum-2025-1";
 import { arrayAverage2026_1 } from "./array-average-2026-1";
 import { circularQueue2025_2 } from "./circular-queue-2025-2";
+import { linkedListReconnect2025_1 } from "./linked-list-reconnect-2025-1";
 import { linkedListRelink2025_2 } from "./linked-list-relink-2025-2";
 import { linkedListReverseString2025_2 } from "./linked-list-reverse-string-2025-2";
 import { linkedListXorSum2025_3 } from "./linked-list-xor-sum-2025-3";
 import { operatorPrecedence2025_3 } from "./operator-precedence-2025-3";
 import { structDoublePointer2025_2 } from "./struct-double-pointer-2025-2";
 import { structPointerOffset2025_3 } from "./struct-pointer-offset-2025-3";
+import { structScoreDecrypt2025_1 } from "./struct-score-decrypt-2025-1";
 import { stringLengthPutchar2025_3 } from "./string-length-putchar-2025-3";
 
 export const cProblems: Problem[] = [
   arrayAverage2026_1,
+  charArrayInsert2025_1,
+  malloc2dSetSum2025_1,
   structPointerOffset2025_3,
+  structScoreDecrypt2025_1,
   stringLengthPutchar2025_3,
   linkedListXorSum2025_3,
+  linkedListReconnect2025_1,
   operatorPrecedence2025_3,
   circularQueue2025_2,
   structDoublePointer2025_2,

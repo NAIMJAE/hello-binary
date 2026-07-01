@@ -36,7 +36,9 @@ export function AnswerPanel({ answer, explanation }: AnswerPanelProps) {
                 <p className="mb-1 text-xs font-medium tracking-wide text-slate-500">
                   정답
                 </p>
-                <p className="font-mono text-2xl font-bold text-emerald-700">{answer}</p>
+                <p className="whitespace-pre-wrap font-mono text-2xl font-bold text-emerald-700">
+                  {answer}
+                </p>
               </div>
               <div>
                 <p className="mb-2 text-xs font-medium tracking-wide text-slate-500">

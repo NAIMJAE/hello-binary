@@ -9,11 +9,10 @@ export default function Home() {
           <p className="text-4xl font-bold tracking-tight text-amber-600 sm:text-5xl">
             hello-binary
           </p>
-          <h1 className="text-3xl font-bold text-slate-900">
-            정보처리기사 실기 코드 Trace
-          </h1>
-          <p className="text-slate-600">
-            코드가 한 줄씩 실행되는 과정을 눈으로 보며 이해하세요.
+          <h1 className="text-3xl font-bold text-slate-900">정보처리기사 실기 준비</h1>
+          <p className="max-w-2xl text-slate-600">
+            한 줄도 건너뛰지 않고, 코드가 실행되는 흐름을 단계별로 보여 줍니다.
+            직접 따라가며 이해하세요.
           </p>
         </header>
 

@@ -14,7 +14,7 @@ export const languages: Language[] = [
   },
   {
     id: "c",
-    name: "C",
+    name: "C언어",
     href: "/c",
     description: "포인터, 배열, 구조체 등",
   },

@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { TraceViewer } from "@/components/trace/TraceViewer";
+import { ScratchPage } from "@/components/scratch/ScratchPage";
 import { javaProblemsBySlug } from "@/problems/java";
 
 type PageProps = {
@@ -10,7 +10,7 @@ export async function generateStaticParams() {
   return Object.keys(javaProblemsBySlug).map((slug) => ({ slug }));
 }
 
-export default async function JavaProblemPage({ params }: PageProps) {
+export default async function JavaScratchPage({ params }: PageProps) {
   const { slug } = await params;
   const problem = javaProblemsBySlug[slug];
 
@@ -18,9 +18,5 @@ export default async function JavaProblemPage({ params }: PageProps) {
     notFound();
   }
 
-  return (
-    <div className="min-h-screen bg-slate-50">
-      <TraceViewer listHref="/java" scratchBasePath="/java" problem={problem} />
-    </div>
-  );
+  return <ScratchPage problem={problem} />;
 }

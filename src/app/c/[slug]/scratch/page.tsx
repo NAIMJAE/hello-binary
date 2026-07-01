@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { TraceViewer } from "@/components/trace/TraceViewer";
+import { ScratchPage } from "@/components/scratch/ScratchPage";
 import { cProblemsBySlug } from "@/problems/c";
 
 type PageProps = {
@@ -10,7 +10,7 @@ export async function generateStaticParams() {
   return Object.keys(cProblemsBySlug).map((slug) => ({ slug }));
 }
 
-export default async function CProblemPage({ params }: PageProps) {
+export default async function CScratchPage({ params }: PageProps) {
   const { slug } = await params;
   const problem = cProblemsBySlug[slug];
 
@@ -18,9 +18,5 @@ export default async function CProblemPage({ params }: PageProps) {
     notFound();
   }
 
-  return (
-    <div className="min-h-screen bg-slate-50">
-      <TraceViewer listHref="/c" scratchBasePath="/c" problem={problem} />
-    </div>
-  );
+  return <ScratchPage problem={problem} />;
 }
