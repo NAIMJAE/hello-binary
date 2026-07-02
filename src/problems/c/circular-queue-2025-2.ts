@@ -66,7 +66,7 @@ export const circularQueue2025_2: Problem = {
         "variables": []
       },
       {
-        "line": 8,
+        "line": 22,
         "comment": "Queue q = {{0}, 0, 0}. front=0, rear=0으로 초기화됩니다.",
         "variables": [
           {

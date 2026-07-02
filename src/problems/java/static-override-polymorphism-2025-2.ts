@@ -91,7 +91,7 @@ export const staticOverridePolymorphism2025_2: Problem = {
         }
       },
       {
-        "line": 5,
+        "line": 12,
         "comment": "ref.x(2) 평가 — 인스턴스 메서드는 런타임 타입 Child의 오버라이드가 실행됩니다.",
         "variables": [
           {

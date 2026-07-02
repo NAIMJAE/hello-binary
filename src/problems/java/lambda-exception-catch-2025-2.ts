@@ -57,7 +57,7 @@ export const lambdaExceptionCatch2025_2: Problem = {
         "variables": []
       },
       {
-        "line": 15,
+        "line": 17,
         "comment": "람다 f 정의: x>2이면 Exception, 아니면 x*2 반환",
         "variables": [
           {
@@ -112,7 +112,7 @@ export const lambdaExceptionCatch2025_2: Problem = {
         ]
       },
       {
-        "line": 7,
+        "line": 8,
         "comment": "run() 내부 try 블록 진입",
         "variables": []
       },
@@ -158,7 +158,7 @@ export const lambdaExceptionCatch2025_2: Problem = {
         }
       },
       {
-        "line": 4,
+        "line": 18,
         "comment": "x=3, x>2 조건 참 → Exception 발생",
         "variables": [
           {
@@ -208,7 +208,7 @@ export const lambdaExceptionCatch2025_2: Problem = {
         }
       },
       {
-        "line": 10,
+        "line": 11,
         "comment": "catch에서 return 7 — run(f)는 7을 반환합니다.",
         "variables": [
           {
@@ -258,7 +258,7 @@ export const lambdaExceptionCatch2025_2: Problem = {
         ]
       },
       {
-        "line": 7,
+        "line": 8,
         "comment": "run() 내부 try 블록 진입 (두 번째 호출)",
         "variables": []
       },
@@ -299,7 +299,7 @@ export const lambdaExceptionCatch2025_2: Problem = {
         }
       },
       {
-        "line": 7,
+        "line": 9,
         "comment": "return 12 — run(람다)는 12를 반환합니다.",
         "variables": [
           {
@@ -323,7 +323,7 @@ export const lambdaExceptionCatch2025_2: Problem = {
         }
       },
       {
-        "line": 9,
+        "line": 24,
         "comment": "7 + 12 = 19",
         "variables": [
           {

@@ -40,6 +40,73 @@ export type MemorySnapshot = {
   arrows: MemoryArrow[];
 };
 
+/** classic = 기존 카드형 스냅샷, diagram = 주소·참조 다이어그램 */
+export type MemoryViewMode = "classic" | "diagram";
+
+export type MemoryDiagramStackSlot = {
+  id: string;
+  name: string;
+  type: string;
+  address: string;
+  value: string;
+  kind: "primitive" | "reference";
+  refTo?: string;
+  highlight?: boolean;
+  carriedOver?: boolean;
+};
+
+export type MemoryDiagramHeapField = {
+  name: string;
+  type: string;
+  value: string;
+  kind: "primitive" | "reference";
+  refTo?: string;
+  highlight?: boolean;
+};
+
+export type MemoryDiagramHeapObject = {
+  id: string;
+  kind: "object";
+  address: string;
+  typeName: string;
+  fields: MemoryDiagramHeapField[];
+  highlight?: boolean;
+};
+
+export type MemoryDiagramHeapArrayElement = {
+  index: number;
+  kind: "primitive" | "reference" | "null";
+  value?: string;
+  refTo?: string;
+  refLabel?: string;
+  highlight?: boolean;
+};
+
+export type MemoryDiagramHeapArray = {
+  id: string;
+  kind: "array";
+  address: string;
+  typeName: string;
+  elements: MemoryDiagramHeapArrayElement[];
+  highlight?: boolean;
+};
+
+export type MemoryDiagramHeapEntry =
+  | MemoryDiagramHeapObject
+  | MemoryDiagramHeapArray;
+
+export type MemoryDiagramLink = {
+  from: string;
+  to: string;
+  highlight?: boolean;
+};
+
+export type MemoryDiagramSnapshot = {
+  stack: MemoryDiagramStackSlot[];
+  heap: MemoryDiagramHeapEntry[];
+  links: MemoryDiagramLink[];
+};
+
 export type TraceStep = {
   line: number;
   relatedLines?: RelatedLine[];
@@ -47,6 +114,7 @@ export type TraceStep = {
   variables: Variable[];
   stdout?: string;
   memory?: MemorySnapshot;
+  memoryDiagram?: MemoryDiagramSnapshot;
 };
 
 export type WorksheetConfig = {
@@ -72,4 +140,6 @@ export type Problem = {
   explanation: string;
   traceSteps: TraceStep[];
   worksheet?: WorksheetConfig;
+  /** 미지정 시 classic. diagram이면 memoryDiagram 기반 UI 사용 */
+  memoryView?: MemoryViewMode;
 };

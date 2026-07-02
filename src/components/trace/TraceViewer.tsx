@@ -6,13 +6,19 @@ import { useMemo } from "react";
 import type { Problem } from "@/types/problem";
 import { answersMatch } from "@/lib/normalizeAnswer";
 import { mergeTraceMemory } from "@/lib/mergeTraceMemory";
+import { mergeTraceMemoryDiagram } from "@/lib/mergeTraceMemoryDiagram";
 import { mergeTraceVariables } from "@/lib/mergeTraceVariables";
 import { openScratchWindow } from "@/lib/openScratchWindow";
+import {
+  readTraceControlsMode,
+  writeTraceControlsMode,
+} from "@/lib/traceControlsMode";
 import { AnswerPanel } from "./AnswerPanel";
 import { ProblemSidebar } from "./ProblemSidebar";
 import { StepComment } from "./StepComment";
-import { TraceControls } from "./TraceControls";
+import { TraceControls, type TraceControlsMode } from "./TraceControls";
 import { MemorySnapshotPanel } from "./MemorySnapshotPanel";
+import { MemoryDiagramPanel } from "./MemoryDiagramPanel";
 import { VariableWatcher } from "./VariableWatcher";
 
 type TraceViewerProps = {
@@ -27,6 +33,19 @@ export function TraceViewer({ problem, listHref, scratchBasePath }: TraceViewerP
   const [solutionUnlocked, setSolutionUnlocked] = useState(false);
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
   const [skipped, setSkipped] = useState(false);
+  const [controlsMode, setControlsMode] = useState<TraceControlsMode>("inline");
+
+  useEffect(() => {
+    setControlsMode(readTraceControlsMode());
+  }, []);
+
+  const toggleControlsMode = useCallback(() => {
+    setControlsMode((prev) => {
+      const next = prev === "inline" ? "dock" : "inline";
+      writeTraceControlsMode(next);
+      return next;
+    });
+  }, []);
 
   const { traceSteps } = problem;
   const currentStep = traceSteps[stepIndex];
@@ -38,8 +57,19 @@ export function TraceViewer({ problem, listHref, scratchBasePath }: TraceViewerP
   );
 
   const displayMemory = useMemo(
-    () => mergeTraceMemory(traceSteps, stepIndex),
-    [traceSteps, stepIndex],
+    () =>
+      problem.memoryView === "diagram"
+        ? null
+        : mergeTraceMemory(traceSteps, stepIndex),
+    [traceSteps, stepIndex, problem.memoryView],
+  );
+
+  const displayMemoryDiagram = useMemo(
+    () =>
+      problem.memoryView === "diagram"
+        ? mergeTraceMemoryDiagram(traceSteps, stepIndex)
+        : null,
+    [traceSteps, stepIndex, problem.memoryView],
   );
 
   const unlockSolution = useCallback(() => {
@@ -111,7 +141,11 @@ export function TraceViewer({ problem, listHref, scratchBasePath }: TraceViewerP
   }, [goPrev, goNext, togglePlay, solutionUnlocked]);
 
   return (
-    <div className="mx-auto w-full max-w-7xl px-4 py-6">
+    <div
+      className={`mx-auto w-full max-w-7xl px-4 py-6 ${
+        solutionUnlocked && controlsMode === "dock" ? "pb-20" : ""
+      }`}
+    >
       <header className="mb-6 flex items-center gap-3">
         <Link
           className="inline-flex shrink-0 items-center gap-1 rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-sm font-medium text-slate-600 shadow-sm transition hover:border-slate-300 hover:bg-slate-50 hover:text-slate-900"
@@ -169,15 +203,19 @@ export function TraceViewer({ problem, listHref, scratchBasePath }: TraceViewerP
 
           {solutionUnlocked && (
             <>
-              <TraceControls
-                isPlaying={isPlaying}
-                stepIndex={stepIndex}
-                totalSteps={totalSteps}
-                onNext={goNext}
-                onPrev={goPrev}
-                onSliderChange={setStepIndex}
-                onTogglePlay={togglePlay}
-              />
+              {controlsMode === "inline" && (
+                <TraceControls
+                  isPlaying={isPlaying}
+                  mode={controlsMode}
+                  stepIndex={stepIndex}
+                  totalSteps={totalSteps}
+                  onNext={goNext}
+                  onPrev={goPrev}
+                  onSliderChange={setStepIndex}
+                  onToggleMode={toggleControlsMode}
+                  onTogglePlay={togglePlay}
+                />
+              )}
 
               {currentStep.comment && (
                 <StepComment comment={currentStep.comment} />
@@ -189,6 +227,10 @@ export function TraceViewer({ problem, listHref, scratchBasePath }: TraceViewerP
                 variables={displayVariables}
               />
 
+              {displayMemoryDiagram && (
+                <MemoryDiagramPanel focused memory={displayMemoryDiagram} />
+              )}
+
               {displayMemory && (
                 <MemorySnapshotPanel focused memory={displayMemory} />
               )}
@@ -198,6 +240,20 @@ export function TraceViewer({ problem, listHref, scratchBasePath }: TraceViewerP
           )}
         </div>
       </div>
+
+      {solutionUnlocked && controlsMode === "dock" && (
+        <TraceControls
+          isPlaying={isPlaying}
+          mode={controlsMode}
+          stepIndex={stepIndex}
+          totalSteps={totalSteps}
+          onNext={goNext}
+          onPrev={goPrev}
+          onSliderChange={setStepIndex}
+          onToggleMode={toggleControlsMode}
+          onTogglePlay={togglePlay}
+        />
+      )}
     </div>
   );
 }

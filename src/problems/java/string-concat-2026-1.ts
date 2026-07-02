@@ -166,7 +166,7 @@ export const stringConcat2026_1: Problem = {
         }
       },
       {
-        "line": 4,
+        "line": 6,
         "comment": "x1 + x2 = 9 + 2 = 11. 아직 모두 정수이므로 덧셈으로 계산됩니다.",
         "variables": [
           {
@@ -197,7 +197,7 @@ export const stringConcat2026_1: Problem = {
         }
       },
       {
-        "line": 4,
+        "line": 6,
         "comment": "11 + \"2\" = \"112\". 문자열이 등장하면 정수 11이 문자열로 변환되어 연결됩니다.",
         "variables": [
           {
@@ -228,7 +228,7 @@ export const stringConcat2026_1: Problem = {
         }
       },
       {
-        "line": 5,
+        "line": 6,
         "comment": "\"112\" + x3 = \"112\" + \"3\" = \"1123\"",
         "variables": [
           {
