@@ -38,6 +38,7 @@ export function ScratchViewer({ problem }: ScratchViewerProps) {
     createEmptyMemorySlots(worksheet.memorySlots),
   );
   const [exporting, setExporting] = useState(false);
+  const [worksheetOpen, setWorksheetOpen] = useState(true);
 
   const isDirty = useMemo(() => {
     if (canvasStrokes.length > 0 || problemStrokes.length > 0) return true;
@@ -113,7 +114,11 @@ export function ScratchViewer({ problem }: ScratchViewerProps) {
         </button>
       </header>
 
-      <ScratchResizableColumns containerRef={exportRef}>
+      <ScratchResizableColumns
+        containerRef={exportRef}
+        worksheetCollapsed={!worksheetOpen}
+        onExpandWorksheet={() => setWorksheetOpen(true)}
+      >
         <div className="grid h-full min-h-0 grid-rows-[auto_minmax(0,1fr)] overflow-hidden">
           <div className="shrink-0 border-b border-slate-200 bg-white px-3 py-2">
             <div className="flex items-center justify-between gap-x-3 gap-y-2">
@@ -193,6 +198,7 @@ export function ScratchViewer({ problem }: ScratchViewerProps) {
             config={worksheet}
             memorySlots={memorySlots}
             variableRows={variableRows}
+            onCollapse={() => setWorksheetOpen(false)}
             onMemorySlotsChange={setMemorySlots}
             onVariableRowsChange={setVariableRows}
           />

@@ -19,6 +19,7 @@ import { StepComment } from "./StepComment";
 import { TraceControls, type TraceControlsMode } from "./TraceControls";
 import { MemorySnapshotPanel } from "./MemorySnapshotPanel";
 import { MemoryDiagramPanel } from "./MemoryDiagramPanel";
+import { TraceResizableSplit } from "./TraceResizableSplit";
 import { VariableWatcher } from "./VariableWatcher";
 
 type TraceViewerProps = {
@@ -177,69 +178,72 @@ export function TraceViewer({ problem, listHref, scratchBasePath }: TraceViewerP
         </div>
       </header>
 
-      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 lg:items-start">
-        <ProblemSidebar
-          activeLine={currentStep.line}
-          isCorrect={isCorrect}
-          problem={problem}
-          relatedLines={currentStep.relatedLines}
-          skipped={skipped}
-          solutionUnlocked={solutionUnlocked}
-          onSkip={handleSkip}
-          onSubmit={handleSubmit}
-        />
+      <TraceResizableSplit
+        left={
+          <ProblemSidebar
+            activeLine={currentStep.line}
+            isCorrect={isCorrect}
+            problem={problem}
+            relatedLines={currentStep.relatedLines}
+            skipped={skipped}
+            solutionUnlocked={solutionUnlocked}
+            onSkip={handleSkip}
+            onSubmit={handleSubmit}
+          />
+        }
+        right={
+          <div className="relative flex flex-col gap-4">
+            {!solutionUnlocked && (
+              <div className="flex min-h-[320px] flex-col items-center justify-center rounded-xl border border-dashed border-slate-300 bg-white p-8 text-center shadow-sm lg:min-h-[480px]">
+                <p className="text-lg font-medium text-slate-700">풀이 과정</p>
+                <p className="mt-2 max-w-sm text-sm leading-relaxed text-slate-500">
+                  정답을 제출하거나 &lsquo;모르겠어요&rsquo;를 누르면, 한 줄씩 실행되는 과정을
+                  건너뛰지 않고 단계별로 확인할 수 있습니다. 실행 중인 줄은 앰버색으로,
+                  호출·참조하는 다른 줄은 별도 색으로 함께 표시됩니다.
+                </p>
+              </div>
+            )}
 
-        <div className="relative flex flex-col gap-4">
-          {!solutionUnlocked && (
-            <div className="flex min-h-[320px] flex-col items-center justify-center rounded-xl border border-dashed border-slate-300 bg-white p-8 text-center shadow-sm lg:min-h-[480px]">
-              <p className="text-lg font-medium text-slate-700">풀이 과정</p>
-              <p className="mt-2 max-w-sm text-sm leading-relaxed text-slate-500">
-                정답을 제출하거나 &lsquo;모르겠어요&rsquo;를 누르면, 한 줄씩 실행되는 과정을
-                건너뛰지 않고 단계별로 확인할 수 있습니다. 실행 중인 줄은 앰버색으로,
-                호출·참조하는 다른 줄은 별도 색으로 함께 표시됩니다.
-              </p>
-            </div>
-          )}
+            {solutionUnlocked && (
+              <>
+                {controlsMode === "inline" && (
+                  <TraceControls
+                    isPlaying={isPlaying}
+                    mode={controlsMode}
+                    stepIndex={stepIndex}
+                    totalSteps={totalSteps}
+                    onNext={goNext}
+                    onPrev={goPrev}
+                    onSliderChange={setStepIndex}
+                    onToggleMode={toggleControlsMode}
+                    onTogglePlay={togglePlay}
+                  />
+                )}
 
-          {solutionUnlocked && (
-            <>
-              {controlsMode === "inline" && (
-                <TraceControls
-                  isPlaying={isPlaying}
-                  mode={controlsMode}
-                  stepIndex={stepIndex}
-                  totalSteps={totalSteps}
-                  onNext={goNext}
-                  onPrev={goPrev}
-                  onSliderChange={setStepIndex}
-                  onToggleMode={toggleControlsMode}
-                  onTogglePlay={togglePlay}
+                {currentStep.comment && (
+                  <StepComment comment={currentStep.comment} />
+                )}
+
+                <VariableWatcher
+                  focused
+                  stdout={currentStep.stdout}
+                  variables={displayVariables}
                 />
-              )}
 
-              {currentStep.comment && (
-                <StepComment comment={currentStep.comment} />
-              )}
+                {displayMemoryDiagram && (
+                  <MemoryDiagramPanel focused memory={displayMemoryDiagram} />
+                )}
 
-              <VariableWatcher
-                focused
-                stdout={currentStep.stdout}
-                variables={displayVariables}
-              />
+                {displayMemory && (
+                  <MemorySnapshotPanel focused memory={displayMemory} />
+                )}
 
-              {displayMemoryDiagram && (
-                <MemoryDiagramPanel focused memory={displayMemoryDiagram} />
-              )}
-
-              {displayMemory && (
-                <MemorySnapshotPanel focused memory={displayMemory} />
-              )}
-
-              <AnswerPanel answer={problem.answer} explanation={problem.explanation} />
-            </>
-          )}
-        </div>
-      </div>
+                <AnswerPanel answer={problem.answer} explanation={problem.explanation} />
+              </>
+            )}
+          </div>
+        }
+      />
 
       {solutionUnlocked && controlsMode === "dock" && (
         <TraceControls

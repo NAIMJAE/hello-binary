@@ -30,6 +30,7 @@ type ScratchWorksheetProps = {
   memorySlots: MemorySlot[];
   onVariableRowsChange: (rows: VariableRow[]) => void;
   onMemorySlotsChange: (slots: MemorySlot[]) => void;
+  onCollapse?: () => void;
 };
 
 function AddButton({
@@ -125,6 +126,7 @@ export function ScratchWorksheet({
   memorySlots,
   onVariableRowsChange,
   onMemorySlotsChange,
+  onCollapse,
 }: ScratchWorksheetProps) {
   const variables = usePointerReorder(variableRows, onVariableRowsChange);
   const memory = usePointerReorder(memorySlots, onMemorySlotsChange);
@@ -169,10 +171,25 @@ export function ScratchWorksheet({
   return (
     <div className="flex h-full min-h-0 flex-col overflow-hidden bg-slate-50/30">
       <div className="shrink-0 border-b border-slate-200 bg-white px-4 py-3">
-        <h2 className="text-sm font-semibold text-slate-900">워크시트</h2>
-        <p className="mt-0.5 text-xs text-slate-500">
-          변수와 메모리를 직접 적어 보세요. ⋮⋮ 핸들을 드래그하면 순서가 바뀝니다.
-        </p>
+        <div className="flex items-start justify-between gap-2">
+          <div className="min-w-0">
+            <h2 className="text-sm font-semibold text-slate-900">워크시트</h2>
+            <p className="mt-0.5 text-xs text-slate-500">
+              변수와 메모리를 직접 적어 보세요. ⋮⋮ 핸들을 드래그하면 순서가 바뀝니다.
+            </p>
+          </div>
+          {onCollapse && (
+            <button
+              aria-label="워크시트 접기"
+              className="shrink-0 rounded-md border border-slate-200 px-2 py-1 text-xs font-medium text-slate-600 transition hover:border-slate-300 hover:bg-slate-50"
+              title="워크시트 접기"
+              type="button"
+              onClick={onCollapse}
+            >
+              접기 ▶
+            </button>
+          )}
+        </div>
       </div>
 
       <div className="min-h-0 flex-1 overflow-y-auto p-4">
