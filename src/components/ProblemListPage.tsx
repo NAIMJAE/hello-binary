@@ -1,5 +1,16 @@
+"use client";
+
 import Link from "next/link";
+import { useMemo, useState, type ReactNode } from "react";
+import { ContentDisclaimer } from "@/components/ContentDisclaimer";
 import { RandomProblemButton } from "@/components/RandomProblemButton";
+import {
+  applyProblemFilters,
+  isCustomProblem,
+  type DifficultyFilter,
+  type SortKey,
+  type SourceFilter,
+} from "@/lib/problemFilters";
 import type { Problem } from "@/types/problem";
 
 type ProblemListPageProps = {
@@ -15,7 +26,53 @@ const difficultyStyles: Record<Problem["difficulty"], string> = {
   어려움: "bg-violet-50 text-violet-700 ring-violet-600/10",
 };
 
+const sourceOptions: { value: SourceFilter; label: string }[] = [
+  { value: "all", label: "전체" },
+  { value: "exam", label: "기출만" },
+  { value: "custom", label: "커스텀만" },
+];
+
+const difficultyOptions: { value: DifficultyFilter; label: string }[] = [
+  { value: "all", label: "전체" },
+  { value: "보통", label: "보통" },
+  { value: "어려움", label: "어려움" },
+];
+
+const sortOptions: { value: SortKey; label: string }[] = [
+  { value: "default", label: "등록순" },
+  { value: "source", label: "출처순" },
+  { value: "topic", label: "주제명" },
+  { value: "difficulty", label: "난이도" },
+  { value: "time", label: "예상 시간" },
+];
+
+function Chip({
+  active,
+  children,
+  onClick,
+}: {
+  active: boolean;
+  children: ReactNode;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      className={`rounded-full px-2.5 py-1 text-xs font-medium transition ${
+        active
+          ? "bg-slate-900 text-white"
+          : "bg-white text-slate-600 ring-1 ring-slate-200 hover:bg-slate-50"
+      }`}
+      onClick={onClick}
+    >
+      {children}
+    </button>
+  );
+}
+
 function ProblemListCard({ problem, basePath }: { problem: Problem; basePath: string }) {
+  const custom = isCustomProblem(problem);
+
   return (
     <li className="h-full">
       <Link
@@ -28,7 +85,13 @@ function ProblemListCard({ problem, basePath }: { problem: Problem; basePath: st
         />
 
         <div className="relative flex flex-wrap items-center gap-1.5">
-          <span className="rounded-full bg-slate-100 px-2.5 py-0.5 text-[11px] font-medium text-slate-600">
+          <span
+            className={`rounded-full px-2.5 py-0.5 text-[11px] font-medium ${
+              custom
+                ? "bg-teal-50 text-teal-800 ring-1 ring-teal-600/15"
+                : "bg-slate-100 text-slate-600"
+            }`}
+          >
             {problem.source}
           </span>
           <span className="rounded-full bg-blue-50 px-2.5 py-0.5 text-[11px] font-medium text-blue-700 ring-1 ring-blue-600/10">
@@ -62,7 +125,33 @@ export function ProblemListPage({
   problems,
   emptyMessage = "아직 등록된 문제가 없습니다.",
 }: ProblemListPageProps) {
-  const topics = [...new Set(problems.map((p) => p.topic))];
+  const [source, setSource] = useState<SourceFilter>("all");
+  const [topic, setTopic] = useState<string | null>(null);
+  const [difficulty, setDifficulty] = useState<DifficultyFilter>("all");
+  const [sort, setSort] = useState<SortKey>("default");
+
+  const topics = useMemo(
+    () => [...new Set(problems.map((p) => p.topic))].sort((a, b) => a.localeCompare(b, "ko")),
+    [problems],
+  );
+
+  const visible = useMemo(
+    () => applyProblemFilters(problems, { source, topic, difficulty, sort }),
+    [problems, source, topic, difficulty, sort],
+  );
+
+  const randomPool = useMemo(
+    () =>
+      applyProblemFilters(problems, {
+        source,
+        topic,
+        difficulty,
+        sort: "default",
+      }),
+    [problems, source, topic, difficulty],
+  );
+
+  const hasAnyProblems = problems.length > 0;
 
   return (
     <div className="min-h-screen bg-slate-50">
@@ -77,41 +166,112 @@ export function ProblemListPage({
           </Link>
           <div className="space-y-2">
             <p className="text-sm font-semibold tracking-wide text-amber-600">{languageName}</p>
-            <h1 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">문제 선택</h1>
+            <h1 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+              문제 선택
+            </h1>
             <p className="max-w-2xl text-slate-600">
-              풀고 싶은 문제를 고르거나, 랜덤으로 시작해 보세요.
+              출처·주제·난이도로 걸러 보거나, 랜덤으로 시작해 보세요.
             </p>
-            {topics.length > 0 && (
-              <div className="flex flex-wrap gap-2 pt-1">
-                {topics.map((topic) => (
-                  <span
-                    key={topic}
-                    className="rounded-full bg-white px-2.5 py-1 text-xs font-medium text-slate-600 ring-1 ring-slate-200"
-                  >
-                    {topic}
-                  </span>
-                ))}
-              </div>
-            )}
           </div>
         </header>
 
-        {problems.length > 0 ? (
+        {hasAnyProblems ? (
           <>
-            <RandomProblemButton basePath={basePath} problems={problems} />
+            <section className="space-y-3 rounded-2xl border border-slate-200/80 bg-white p-4 shadow-sm sm:p-5">
+              <div className="space-y-2">
+                <p className="text-[11px] font-semibold tracking-wide text-slate-400">출처</p>
+                <div className="flex flex-wrap gap-1.5">
+                  {sourceOptions.map((opt) => (
+                    <Chip
+                      key={opt.value}
+                      active={source === opt.value}
+                      onClick={() => setSource(opt.value)}
+                    >
+                      {opt.label}
+                    </Chip>
+                  ))}
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <p className="text-[11px] font-semibold tracking-wide text-slate-400">주제</p>
+                <div className="flex flex-wrap gap-1.5">
+                  <Chip active={topic === null} onClick={() => setTopic(null)}>
+                    전체
+                  </Chip>
+                  {topics.map((t) => (
+                    <Chip key={t} active={topic === t} onClick={() => setTopic(t)}>
+                      {t}
+                    </Chip>
+                  ))}
+                </div>
+              </div>
+
+              <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+                <div className="space-y-2">
+                  <p className="text-[11px] font-semibold tracking-wide text-slate-400">난이도</p>
+                  <div className="flex flex-wrap gap-1.5">
+                    {difficultyOptions.map((opt) => (
+                      <Chip
+                        key={opt.value}
+                        active={difficulty === opt.value}
+                        onClick={() => setDifficulty(opt.value)}
+                      >
+                        {opt.label}
+                      </Chip>
+                    ))}
+                  </div>
+                </div>
+
+                <label className="flex items-center gap-2 text-xs text-slate-500">
+                  <span className="shrink-0 font-semibold tracking-wide text-slate-400">정렬</span>
+                  <select
+                    className="rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1.5 text-sm text-slate-800 outline-none focus:border-amber-300 focus:ring-2 focus:ring-amber-100"
+                    value={sort}
+                    onChange={(e) => setSort(e.target.value as SortKey)}
+                  >
+                    {sortOptions.map((opt) => (
+                      <option key={opt.value} value={opt.value}>
+                        {opt.label}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+              </div>
+            </section>
+
+            <RandomProblemButton
+              basePath={basePath}
+              problems={randomPool}
+              sourceFilter={source}
+              onSourceFilterChange={setSource}
+            />
 
             <section className="space-y-4">
               <div className="flex items-baseline justify-between gap-4">
-                <h2 className="text-sm font-semibold tracking-wide text-slate-500">
-                  문제 목록
-                </h2>
-                <span className="text-xs font-medium text-slate-400">{problems.length}문제</span>
+                <h2 className="text-sm font-semibold tracking-wide text-slate-500">문제 목록</h2>
+                <span className="text-xs font-medium text-slate-400">
+                  {visible.length}
+                  {visible.length !== problems.length ? ` / ${problems.length}` : ""}
+                  문제
+                </span>
               </div>
-              <ul className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-                {problems.map((problem) => (
-                  <ProblemListCard key={problem.id} basePath={basePath} problem={problem} />
-                ))}
-              </ul>
+
+              {visible.length > 0 ? (
+                <ul className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+                  {visible.map((problem) => (
+                    <ProblemListCard
+                      key={problem.id}
+                      basePath={basePath}
+                      problem={problem}
+                    />
+                  ))}
+                </ul>
+              ) : (
+                <div className="rounded-2xl border border-dashed border-slate-300 bg-white px-6 py-12 text-center">
+                  <p className="text-slate-600">조건에 맞는 문제가 없습니다. 필터를 바꿔 보세요.</p>
+                </div>
+              )}
             </section>
           </>
         ) : (
@@ -119,6 +279,8 @@ export function ProblemListPage({
             <p className="text-slate-600">{emptyMessage}</p>
           </div>
         )}
+
+        <ContentDisclaimer />
       </main>
     </div>
   );

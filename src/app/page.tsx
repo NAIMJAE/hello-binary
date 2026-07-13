@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ContentDisclaimer } from "@/components/ContentDisclaimer";
 import { languages } from "@/data/languages";
 
 export default function Home() {
@@ -36,6 +37,8 @@ export default function Home() {
             ))}
           </ul>
         </section>
+
+        <ContentDisclaimer />
       </main>
     </div>
   );

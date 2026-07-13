@@ -181,6 +181,16 @@ export const stringConcat2026_1: Problem = {
             "line": 3,
             "role": "read",
             "label": "x1 선언"
+          },
+          {
+            "line": 4,
+            "role": "read",
+            "label": "x2 선언"
+          },
+          {
+            "line": 5,
+            "role": "read",
+            "label": "x3 선언"
           }
         ],
         "memory": {
@@ -208,6 +218,16 @@ export const stringConcat2026_1: Problem = {
           }
         ],
         "relatedLines": [
+          {
+            "line": 3,
+            "role": "read",
+            "label": "x1 선언"
+          },
+          {
+            "line": 4,
+            "role": "read",
+            "label": "x2 선언"
+          },
           {
             "line": 5,
             "role": "read",
@@ -249,7 +269,24 @@ export const stringConcat2026_1: Problem = {
             }
           ],
           "arrows": []
-        }
+        },
+        "relatedLines": [
+          {
+            "line": 3,
+            "role": "read",
+            "label": "x1 선언"
+          },
+          {
+            "line": 4,
+            "role": "read",
+            "label": "x2 선언"
+          },
+          {
+            "line": 5,
+            "role": "read",
+            "label": "x3 선언"
+          }
+        ]
       },
       {
         "line": 6,

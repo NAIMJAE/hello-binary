@@ -108,14 +108,19 @@ export const staticOverridePolymorphism2025_2: Problem = {
         ],
         "relatedLines": [
           {
+            "line": 5,
+            "role": "call",
+            "label": "x 호출"
+          },
+          {
+            "line": 5,
+            "role": "definition",
+            "label": "Child.x() 정의"
+          },
+          {
             "line": 10,
             "role": "definition",
             "label": "Child 정의"
-          },
-          {
-            "line": 12,
-            "role": "call",
-            "label": "x 호출"
           },
           {
             "line": 13,

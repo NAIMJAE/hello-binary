@@ -54,135 +54,285 @@ export const inheritanceFieldOverride2024_3: Problem = {
 6. b.x → 참조 타입 Derivate → x = 7
 
 7. 21 + 3 + 21 + 7 = 52`,
-  traceSteps: [
-    {
-      line: 2,
-      comment: "main() 메서드가 시작됩니다.",
-      variables: [],
-    },
-    {
-      line: 3,
-      comment: "Base a = new Derivate() — 참조 타입 Base, 실제 객체 Derivate가 생성됩니다.",
-      variables: [
-        { name: "a (참조 타입)", type: "String", value: "Base" },
-        { name: "a (실제 객체)", type: "String", value: "Derivate", highlight: true },
-      ],
-      relatedLines: [{ line: 19, role: "definition", label: "Derivate 정의" }],
-      memory: {
-        cells: [
+  traceSteps:   [
+      {
+        "line": 2,
+        "comment": "main() 메서드가 시작됩니다.",
+        "variables": []
+      },
+      {
+        "line": 3,
+        "comment": "Base a = new Derivate() — 참조 타입 Base, 실제 객체 Derivate가 생성됩니다.",
+        "variables": [
           {
-            id: "heap_a",
-            region: "heap",
-            label: "a → Derivate",
-            value: "Base.x=3, Derivate.x=7",
-            highlight: true,
+            "name": "a (참조 타입)",
+            "type": "String",
+            "value": "Base"
           },
-        ],
-        arrows: [],
-      },
-    },
-    {
-      line: 4,
-      comment: "Derivate b = new Derivate() — Derivate 객체가 하나 더 생성됩니다.",
-      variables: [
-        { name: "a (실제 객체)", type: "String", value: "Derivate" },
-        { name: "b", type: "Derivate", value: "x=7", highlight: true },
-      ],
-      relatedLines: [{ line: 19, role: "definition", label: "Derivate 정의" }],
-      memory: {
-        cells: [
           {
-            id: "heap_b",
-            region: "heap",
-            label: "b → Derivate",
-            value: "Base.x=3, Derivate.x=7",
-            highlight: true,
+            "name": "a (실제 객체)",
+            "type": "String",
+            "value": "Derivate",
+            "highlight": true
+          }
+        ],
+        "memory": {
+          "cells": [
+            {
+              "id": "stack_a________",
+              "region": "stack",
+              "label": "a (참조 타입)",
+              "value": "Base",
+              "highlight": true
+            }
+          ],
+          "arrows": []
+        }
+      },
+      {
+        "line": 4,
+        "comment": "Derivate b = new Derivate() — Derivate 객체가 하나 더 생성됩니다.",
+        "variables": [
+          {
+            "name": "a (실제 객체)",
+            "type": "String",
+            "value": "Derivate"
           },
+          {
+            "name": "b",
+            "type": "Derivate",
+            "value": "x=7",
+            "highlight": true
+          }
         ],
-        arrows: [],
-      },
-    },
-    {
-      line: 6,
-      comment: "a.getX() — 인스턴스 메서드는 런타임 타입(Derivate)의 getX()가 호출됩니다.",
-      variables: [
-        { name: "a.getX()", type: "int", value: "Derivate.getX() → 7×3", highlight: true },
-      ],
-      relatedLines: [
-        { line: 22, role: "definition", label: "Derivate.getX()" },
-        { line: 3, role: "read", label: "a 선언" },
-      ],
-    },
-    {
-      line: 23,
-      comment: "Derivate.getX() — x=7이므로 7 × 3 = 21을 반환합니다.",
-      variables: [{ name: "a.getX()", type: "int", value: 21, highlight: true }],
-      relatedLines: [{ line: 6, role: "call", label: "a.getX() 호출" }],
-      memory: {
-        cells: [
-          { id: "stack_getX_a", region: "stack", label: "a.getX()", value: "21", highlight: true },
+        "relatedLines": [
+          {
+            "line": 3,
+            "role": "call",
+            "label": "Derivate 호출"
+          }
         ],
-        arrows: [],
+        "memory": {
+          "cells": [
+            {
+              "id": "stack_a________",
+              "region": "stack",
+              "label": "a (실제 객체)",
+              "value": "Derivate",
+              "highlight": false
+            },
+            {
+              "id": "heap_b",
+              "region": "heap",
+              "label": "b",
+              "value": "x=7",
+              "highlight": true
+            }
+          ],
+          "arrows": []
+        }
       },
-    },
-    {
-      line: 6,
-      comment: "a.x — 필드는 참조 타입(Base) 기준으로 접근하므로 Base.x = 3입니다.",
-      variables: [
-        { name: "a.getX()", type: "int", value: 21 },
-        { name: "a.x", type: "int", value: 3, highlight: true },
-      ],
-      relatedLines: [{ line: 12, role: "read", label: "Base.x 선언" }],
-      memory: {
-        cells: [
-          { id: "stack_ax", region: "stack", label: "a.x", value: "3 (Base 필드)", highlight: true },
+      {
+        "line": 6,
+        "comment": "a.getX() — 인스턴스 메서드는 런타임 타입(Derivate)의 getX()가 호출됩니다.",
+        "variables": [
+          {
+            "name": "a.getX()",
+            "type": "int",
+            "value": "Derivate.getX() → 7×3",
+            "highlight": true
+          }
         ],
-        arrows: [],
+        "relatedLines": [
+          {
+            "line": 3,
+            "role": "read",
+            "label": "a 선언"
+          },
+          {
+            "line": 4,
+            "role": "read",
+            "label": "b 선언"
+          },
+          {
+            "line": 12,
+            "role": "read",
+            "label": "x 선언"
+          }
+        ]
       },
-    },
-    {
-      line: 6,
-      comment: "b.getX() — Derivate.getX() → 7 × 3 = 21",
-      variables: [
-        { name: "a.getX()", type: "int", value: 21 },
-        { name: "a.x", type: "int", value: 3 },
-        { name: "b.getX()", type: "int", value: 21, highlight: true },
-      ],
-      relatedLines: [
-        { line: 22, role: "definition", label: "Derivate.getX()" },
-        { line: 4, role: "read", label: "b 선언" },
-      ],
-    },
-    {
-      line: 6,
-      comment: "b.x — 참조 타입 Derivate이므로 Derivate.x = 7입니다.",
-      variables: [
-        { name: "b.getX()", type: "int", value: 21 },
-        { name: "b.x", type: "int", value: 7, highlight: true },
-      ],
-      relatedLines: [{ line: 20, role: "read", label: "Derivate.x 선언" }],
-      memory: {
-        cells: [
-          { id: "stack_bx", region: "stack", label: "b.x", value: "7 (Derivate 필드)", highlight: true },
+      {
+        "line": 23,
+        "comment": "Derivate.getX() — x=7이므로 7 × 3 = 21을 반환합니다.",
+        "variables": [
+          {
+            "name": "a.getX()",
+            "type": "int",
+            "value": 21,
+            "highlight": true
+          }
         ],
-        arrows: [],
+        "relatedLines": [
+          {
+            "line": 3,
+            "role": "read",
+            "label": "a 선언"
+          },
+          {
+            "line": 12,
+            "role": "read",
+            "label": "x 선언"
+          }
+        ]
       },
-    },
-    {
-      line: 6,
-      comment: "21 + 3 + 21 + 7 = 52. System.out.print(52) 실행 — 최종 출력값은 52입니다.",
-      variables: [{ name: "결과", type: "int", value: 52, highlight: true }],
-      stdout: "52",
-      relatedLines: [
-        { line: 3, role: "read", label: "a 선언" },
-        { line: 4, role: "read", label: "b 선언" },
-      ],
-      memory: {
-        cells: [
-          { id: "stack_result", region: "stack", label: "결과", value: "52", highlight: true },
+      {
+        "line": 6,
+        "comment": "a.x — 필드는 참조 타입(Base) 기준으로 접근하므로 Base.x = 3입니다.",
+        "variables": [
+          {
+            "name": "a.getX()",
+            "type": "int",
+            "value": 21
+          },
+          {
+            "name": "a.x",
+            "type": "int",
+            "value": 3,
+            "highlight": true
+          }
         ],
-        arrows: [],
+        "relatedLines": [
+          {
+            "line": 3,
+            "role": "read",
+            "label": "a 선언"
+          },
+          {
+            "line": 4,
+            "role": "read",
+            "label": "b 선언"
+          },
+          {
+            "line": 12,
+            "role": "read",
+            "label": "x 선언"
+          }
+        ]
       },
-    },
-  ],
+      {
+        "line": 6,
+        "comment": "b.getX() — Derivate.getX() → 7 × 3 = 21",
+        "variables": [
+          {
+            "name": "a.getX()",
+            "type": "int",
+            "value": 21
+          },
+          {
+            "name": "a.x",
+            "type": "int",
+            "value": 3
+          },
+          {
+            "name": "b.getX()",
+            "type": "int",
+            "value": 21,
+            "highlight": true
+          }
+        ],
+        "relatedLines": [
+          {
+            "line": 3,
+            "role": "read",
+            "label": "a 선언"
+          },
+          {
+            "line": 4,
+            "role": "read",
+            "label": "b 선언"
+          },
+          {
+            "line": 12,
+            "role": "read",
+            "label": "x 선언"
+          }
+        ]
+      },
+      {
+        "line": 6,
+        "comment": "b.x — 참조 타입 Derivate이므로 Derivate.x = 7입니다.",
+        "variables": [
+          {
+            "name": "b.getX()",
+            "type": "int",
+            "value": 21
+          },
+          {
+            "name": "b.x",
+            "type": "int",
+            "value": 7,
+            "highlight": true
+          }
+        ],
+        "relatedLines": [
+          {
+            "line": 3,
+            "role": "read",
+            "label": "a 선언"
+          },
+          {
+            "line": 4,
+            "role": "read",
+            "label": "b 선언"
+          },
+          {
+            "line": 12,
+            "role": "read",
+            "label": "x 선언"
+          }
+        ]
+      },
+      {
+        "line": 6,
+        "comment": "21 + 3 + 21 + 7 = 52. System.out.print(52) 실행 — 최종 출력값은 52입니다.",
+        "variables": [
+          {
+            "name": "결과",
+            "type": "int",
+            "value": 52,
+            "highlight": true
+          }
+        ],
+        "stdout": "52",
+        "relatedLines": [
+          {
+            "line": 3,
+            "role": "read",
+            "label": "a 선언"
+          },
+          {
+            "line": 4,
+            "role": "read",
+            "label": "b 선언"
+          },
+          {
+            "line": 12,
+            "role": "read",
+            "label": "x 선언"
+          }
+        ],
+        "memory": {
+          "cells": [
+            {
+              "id": "stack___",
+              "region": "stack",
+              "label": "결과",
+              "value": "52",
+              "highlight": true
+            }
+          ],
+          "arrows": []
+        }
+      }
+    ],
 };

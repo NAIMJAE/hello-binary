@@ -50,197 +50,508 @@ export const stringEqualsArrayLoop2024_3: Problem = {
    - "A", "A", "A" 출력 -> "AAA"
 
 5. 최종 출력은 "OO" + "AAA" = OOAAA`,
-  traceSteps: [
-    {
-      line: 17,
-      comment: "main() 메서드가 시작됩니다.",
-      variables: [],
-    },
-    {
-      line: 18,
-      comment: 's[0] = "A"가 저장됩니다.',
-      variables: [
-        { name: "s", type: "String[]", value: ['"A"', "null", "null"], highlight: true },
-      ],
-      memory: {
-        cells: [
+  traceSteps:   [
+      {
+        "line": 17,
+        "comment": "main() 메서드가 시작됩니다.",
+        "variables": []
+      },
+      {
+        "line": 18,
+        "comment": "s[0] = \"A\"가 저장됩니다.",
+        "variables": [
           {
-            id: "heap_s",
-            region: "heap",
-            label: "s",
-            value: '["A", null, null]',
-            highlight: true,
-          },
+            "name": "s",
+            "type": "String[]",
+            "value": [
+              "\"A\"",
+              "null",
+              "null"
+            ],
+            "highlight": true
+          }
         ],
-        arrows: [],
-      },
-    },
-    {
-      line: 19,
-      comment: 's[1] = "A"가 저장됩니다.',
-      variables: [{ name: "s", type: "String[]", value: ['"A"', '"A"', "null"], highlight: true }],
-      relatedLines: [{ line: 18, role: "read", label: "s[0] 대입" }],
-      memory: {
-        cells: [
+        "memory": {
+          "cells": [
+            {
+              "id": "data_s",
+              "region": "data",
+              "label": "s",
+              "value": "[\"A\", null, null]",
+              "highlight": true
+            },
+            {
+              "id": "stack_s",
+              "region": "stack",
+              "label": "s",
+              "value": "→ 배열",
+              "address": "0x100",
+              "highlight": true
+            }
+          ],
+          "arrows": [
+            {
+              "from": "stack_s",
+              "to": "data_s",
+              "label": "주소",
+              "highlight": true
+            }
+          ]
+        },
+        "relatedLines": [
           {
-            id: "heap_s",
-            region: "heap",
-            label: "s",
-            value: '["A", "A", null]',
-            highlight: true,
-          },
-        ],
-        arrows: [],
+            "line": 2,
+            "role": "read",
+            "label": "s 선언"
+          }
+        ]
       },
-    },
-    {
-      line: 20,
-      comment: 's[2] = new String("A")로 마지막 원소가 채워집니다.',
-      variables: [{ name: "s", type: "String[]", value: ['"A"', '"A"', '"A"'], highlight: true }],
-      relatedLines: [{ line: 2, role: "read", label: "s 배열 선언" }],
-      memory: {
-        cells: [
+      {
+        "line": 19,
+        "comment": "s[1] = \"A\"가 저장됩니다.",
+        "variables": [
           {
-            id: "heap_s",
-            region: "heap",
-            label: "s",
-            value: '["A", "A", "A"]',
-            highlight: true,
+            "name": "s",
+            "type": "String[]",
+            "value": [
+              "\"A\"",
+              "\"A\"",
+              "null"
+            ],
+            "highlight": true
+          }
+        ],
+        "relatedLines": [
+          {
+            "line": 2,
+            "role": "read",
+            "label": "s 선언"
+          }
+        ],
+        "memory": {
+          "cells": [
+            {
+              "id": "data_s",
+              "region": "data",
+              "label": "s",
+              "value": "[\"A\", \"A\", null]",
+              "highlight": true
+            },
+            {
+              "id": "stack_s",
+              "region": "stack",
+              "label": "s",
+              "value": "→ 배열",
+              "address": "0x100",
+              "highlight": true
+            }
+          ],
+          "arrows": [
+            {
+              "from": "stack_s",
+              "to": "data_s",
+              "label": "주소",
+              "highlight": true
+            }
+          ]
+        }
+      },
+      {
+        "line": 20,
+        "comment": "s[2] = new String(\"A\")로 마지막 원소가 채워집니다.",
+        "variables": [
+          {
+            "name": "s",
+            "type": "String[]",
+            "value": [
+              "\"A\"",
+              "\"A\"",
+              "\"A\""
+            ],
+            "highlight": true
+          }
+        ],
+        "relatedLines": [
+          {
+            "line": 2,
+            "role": "read",
+            "label": "s 선언"
+          }
+        ],
+        "memory": {
+          "cells": [
+            {
+              "id": "data_s",
+              "region": "data",
+              "label": "s",
+              "value": "[\"A\", \"A\", \"A\"]",
+              "highlight": true
+            },
+            {
+              "id": "stack_s",
+              "region": "stack",
+              "label": "s",
+              "value": "→ 배열",
+              "address": "0x100",
+              "highlight": true
+            }
+          ],
+          "arrows": [
+            {
+              "from": "stack_s",
+              "to": "data_s",
+              "label": "주소",
+              "highlight": true
+            }
+          ]
+        }
+      },
+      {
+        "line": 22,
+        "comment": "호출문이 실행되어 정의된 메서드 내부 흐름으로 이동합니다.",
+        "variables": [
+          {
+            "name": "size",
+            "type": "int",
+            "value": 3,
+            "highlight": true
+          }
+        ],
+        "relatedLines": [
+          {
+            "line": 4,
+            "role": "call",
+            "label": "func 호출"
           },
+          {
+            "line": 4,
+            "role": "read",
+            "label": "size 선언"
+          }
         ],
-        arrows: [],
+        "memory": {
+          "cells": [
+            {
+              "id": "stack_size",
+              "region": "stack",
+              "label": "size",
+              "value": "3",
+              "highlight": true
+            }
+          ],
+          "arrows": []
+        }
       },
-    },
-    {
-      line: 22,
-      comment: "호출문이 실행되어 정의된 메서드 내부 흐름으로 이동합니다.",
-      variables: [{ name: "size", type: "int", value: 3, highlight: true }],
-      relatedLines: [{ line: 4, role: "definition", label: "func 정의" }],
-      memory: {
-        cells: [
-          { id: "stack_size", region: "stack", label: "size", value: "3", highlight: true },
+      {
+        "line": 5,
+        "comment": "func에 진입하고 첫 번째 for 루프(i=1)로 비교를 시작합니다.",
+        "variables": [
+          {
+            "name": "i",
+            "type": "int",
+            "value": 1,
+            "highlight": true
+          },
+          {
+            "name": "size",
+            "type": "int",
+            "value": 3
+          }
         ],
-        arrows: [],
-      },
-    },
-    {
-      line: 5,
-      comment: "func에 진입하고 첫 번째 for 루프(i=1)로 비교를 시작합니다.",
-      variables: [
-        { name: "i", type: "int", value: 1, highlight: true },
-        { name: "size", type: "int", value: 3 },
-      ],
-      relatedLines: [
-        { line: 22, role: "call", label: "func 호출 위치" },
-        { line: 2, role: "read", label: "s 배열 선언" },
-      ],
-      memory: {
-        cells: [
-          { id: "stack_i", region: "stack", label: "i", value: "1", highlight: true },
-          { id: "stack_size", region: "stack", label: "size", value: "3", highlight: false },
-          { id: "heap_s", region: "heap", label: "s", value: '["A", "A", "A"]', highlight: false },
+        "relatedLines": [
+          {
+            "line": 4,
+            "role": "read",
+            "label": "size 선언"
+          }
         ],
-        arrows: [],
+        "memory": {
+          "cells": [
+            {
+              "id": "stack_i",
+              "region": "stack",
+              "label": "i",
+              "value": "1",
+              "highlight": true
+            },
+            {
+              "id": "stack_size",
+              "region": "stack",
+              "label": "size",
+              "value": "3",
+              "highlight": false
+            }
+          ],
+          "arrows": []
+        }
       },
-    },
-    {
-      line: 6,
-      comment: "if 조건의 equals 비교 결과가 true입니다.",
-      variables: [{ name: "비교결과", type: "boolean", value: true, highlight: true }],
-      relatedLines: [{ line: 2, role: "read", label: "s 배열 선언" }],
-      memory: {
-        cells: [
-          { id: "stack_cmp1", region: "stack", label: "비교결과", value: "true", highlight: true },
+      {
+        "line": 6,
+        "comment": "if 조건의 equals 비교 결과가 true입니다.",
+        "variables": [
+          {
+            "name": "비교결과",
+            "type": "boolean",
+            "value": true,
+            "highlight": true
+          }
         ],
-        arrows: [],
+        "memory": {
+          "cells": [
+            {
+              "id": "stack_____",
+              "region": "stack",
+              "label": "비교결과",
+              "value": "true",
+              "highlight": true
+            }
+          ],
+          "arrows": []
+        }
       },
-    },
-    {
-      line: 7,
-      comment: '조건이 true이므로 "O"를 출력합니다.',
-      variables: [],
-      stdout: "O",
-      relatedLines: [{ line: 6, role: "read", label: "equals 비교" }],
-    },
-    {
-      line: 5,
-      comment: "다음 반복(i=2)로 진행합니다.",
-      variables: [
-        { name: "i", type: "int", value: 2, highlight: true },
-        { name: "size", type: "int", value: 3 },
-      ],
-      relatedLines: [{ line: 6, role: "read", label: "이전 비교식" }],
-      memory: {
-        cells: [
-          { id: "stack_i", region: "stack", label: "i", value: "2", highlight: true },
-          { id: "stack_size", region: "stack", label: "size", value: "3", highlight: false },
+      {
+        "line": 7,
+        "comment": "조건이 true이므로 \"O\"를 출력합니다.",
+        "variables": [],
+        "stdout": "O"
+      },
+      {
+        "line": 5,
+        "comment": "다음 반복(i=2)로 진행합니다.",
+        "variables": [
+          {
+            "name": "i",
+            "type": "int",
+            "value": 2,
+            "highlight": true
+          },
+          {
+            "name": "size",
+            "type": "int",
+            "value": 3
+          }
         ],
-        arrows: [],
-      },
-    },
-    {
-      line: 6,
-      comment: "두 번째 조건 비교도 true입니다. 같은 문자 내용이므로 참으로 판단됩니다.",
-      variables: [{ name: "비교결과", type: "boolean", value: true, highlight: true }],
-      relatedLines: [{ line: 20, role: "read", label: "s[2] 대입" }],
-      memory: {
-        cells: [
-          { id: "stack_cmp2", region: "stack", label: "비교결과", value: "true", highlight: true },
+        "relatedLines": [
+          {
+            "line": 4,
+            "role": "read",
+            "label": "size 선언"
+          }
         ],
-        arrows: [],
+        "memory": {
+          "cells": [
+            {
+              "id": "stack_i",
+              "region": "stack",
+              "label": "i",
+              "value": "2",
+              "highlight": true
+            },
+            {
+              "id": "stack_size",
+              "region": "stack",
+              "label": "size",
+              "value": "3",
+              "highlight": false
+            }
+          ],
+          "arrows": []
+        }
       },
-    },
-    {
-      line: 7,
-      comment: '조건이 true이므로 "O"를 한 번 더 출력합니다. 현재까지 출력은 OO입니다.',
-      variables: [],
-      stdout: "O",
-      relatedLines: [{ line: 6, role: "read", label: "equals 비교" }],
-    },
-    {
-      line: 12,
-      comment: "두 번째 for-each 루프에 진입하고 첫 원소 m=\"A\"를 꺼냅니다.",
-      variables: [{ name: "m", type: "String", value: '"A"', highlight: true }],
-      relatedLines: [{ line: 2, role: "read", label: "s 배열 선언" }],
-      memory: {
-        cells: [
-          { id: "stack_m", region: "stack", label: "m", value: '"A"', highlight: true },
+      {
+        "line": 6,
+        "comment": "두 번째 조건 비교도 true입니다. 같은 문자 내용이므로 참으로 판단됩니다.",
+        "variables": [
+          {
+            "name": "비교결과",
+            "type": "boolean",
+            "value": true,
+            "highlight": true
+          }
         ],
-        arrows: [],
+        "memory": {
+          "cells": [
+            {
+              "id": "stack_____",
+              "region": "stack",
+              "label": "비교결과",
+              "value": "true",
+              "highlight": true
+            }
+          ],
+          "arrows": []
+        }
       },
-    },
-    {
-      line: 13,
-      comment: '첫 번째 원소 "A"를 출력합니다.',
-      variables: [{ name: "m", type: "String", value: '"A"' }],
-      stdout: "A",
-      relatedLines: [{ line: 12, role: "read", label: "for-each 변수 m" }],
-    },
-    {
-      line: 12,
-      comment: "두 번째 원소 m=\"A\"를 순회합니다.",
-      variables: [{ name: "m", type: "String", value: '"A"', highlight: true }],
-      relatedLines: [{ line: 2, role: "read", label: "s 배열 선언" }],
-    },
-    {
-      line: 13,
-      comment: '두 번째 "A"를 출력합니다.',
-      variables: [{ name: "m", type: "String", value: '"A"' }],
-      stdout: "A",
-      relatedLines: [{ line: 12, role: "read", label: "for-each 변수 m" }],
-    },
-    {
-      line: 12,
-      comment: "세 번째 원소 m=\"A\"를 순회합니다.",
-      variables: [{ name: "m", type: "String", value: '"A"', highlight: true }],
-      relatedLines: [{ line: 20, role: "read", label: "s[2] 값" }],
-    },
-    {
-      line: 13,
-      comment: '세 번째 "A"를 출력합니다. 최종 출력은 OOAAA입니다.',
-      variables: [{ name: "m", type: "String", value: '"A"' }],
-      stdout: "A",
-      relatedLines: [{ line: 12, role: "read", label: "for-each 변수 m" }],
-    },
-  ],
+      {
+        "line": 7,
+        "comment": "조건이 true이므로 \"O\"를 한 번 더 출력합니다. 현재까지 출력은 OO입니다.",
+        "variables": [],
+        "stdout": "O"
+      },
+      {
+        "line": 12,
+        "comment": "두 번째 for-each 루프에 진입하고 첫 원소 m=\"A\"를 꺼냅니다.",
+        "variables": [
+          {
+            "name": "m",
+            "type": "String",
+            "value": "\"A\"",
+            "highlight": true
+          }
+        ],
+        "memory": {
+          "cells": [
+            {
+              "id": "stack_m",
+              "region": "stack",
+              "label": "m",
+              "value": "\"A\"",
+              "highlight": true
+            }
+          ],
+          "arrows": []
+        }
+      },
+      {
+        "line": 13,
+        "comment": "첫 번째 원소 \"A\"를 출력합니다.",
+        "variables": [
+          {
+            "name": "m",
+            "type": "String",
+            "value": "\"A\""
+          }
+        ],
+        "stdout": "A",
+        "relatedLines": [
+          {
+            "line": 12,
+            "role": "read",
+            "label": "m 선언"
+          }
+        ],
+        "memory": {
+          "cells": [
+            {
+              "id": "stack_m",
+              "region": "stack",
+              "label": "m",
+              "value": "\"A\"",
+              "highlight": false
+            }
+          ],
+          "arrows": []
+        }
+      },
+      {
+        "line": 12,
+        "comment": "두 번째 원소 m=\"A\"를 순회합니다.",
+        "variables": [
+          {
+            "name": "m",
+            "type": "String",
+            "value": "\"A\"",
+            "highlight": true
+          }
+        ],
+        "memory": {
+          "cells": [
+            {
+              "id": "stack_m",
+              "region": "stack",
+              "label": "m",
+              "value": "\"A\"",
+              "highlight": true
+            }
+          ],
+          "arrows": []
+        }
+      },
+      {
+        "line": 13,
+        "comment": "두 번째 \"A\"를 출력합니다.",
+        "variables": [
+          {
+            "name": "m",
+            "type": "String",
+            "value": "\"A\""
+          }
+        ],
+        "stdout": "A",
+        "relatedLines": [
+          {
+            "line": 12,
+            "role": "read",
+            "label": "m 선언"
+          }
+        ],
+        "memory": {
+          "cells": [
+            {
+              "id": "stack_m",
+              "region": "stack",
+              "label": "m",
+              "value": "\"A\"",
+              "highlight": false
+            }
+          ],
+          "arrows": []
+        }
+      },
+      {
+        "line": 12,
+        "comment": "세 번째 원소 m=\"A\"를 순회합니다.",
+        "variables": [
+          {
+            "name": "m",
+            "type": "String",
+            "value": "\"A\"",
+            "highlight": true
+          }
+        ],
+        "memory": {
+          "cells": [
+            {
+              "id": "stack_m",
+              "region": "stack",
+              "label": "m",
+              "value": "\"A\"",
+              "highlight": true
+            }
+          ],
+          "arrows": []
+        }
+      },
+      {
+        "line": 13,
+        "comment": "세 번째 \"A\"를 출력합니다. 최종 출력은 OOAAA입니다.",
+        "variables": [
+          {
+            "name": "m",
+            "type": "String",
+            "value": "\"A\""
+          }
+        ],
+        "stdout": "A",
+        "relatedLines": [
+          {
+            "line": 12,
+            "role": "read",
+            "label": "m 선언"
+          }
+        ],
+        "memory": {
+          "cells": [
+            {
+              "id": "stack_m",
+              "region": "stack",
+              "label": "m",
+              "value": "\"A\"",
+              "highlight": false
+            }
+          ],
+          "arrows": []
+        }
+      }
+    ],
 };

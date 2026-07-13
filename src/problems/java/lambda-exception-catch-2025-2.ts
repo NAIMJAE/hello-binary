@@ -72,11 +72,6 @@ export const lambdaExceptionCatch2025_2: Problem = {
             "line": 4,
             "role": "read",
             "label": "x 선언"
-          },
-          {
-            "line": 17,
-            "role": "read",
-            "label": "f 선언"
           }
         ],
         "memory": {
@@ -170,9 +165,9 @@ export const lambdaExceptionCatch2025_2: Problem = {
         ],
         "relatedLines": [
           {
-            "line": 9,
-            "role": "call",
-            "label": "apply 호출"
+            "line": 4,
+            "role": "read",
+            "label": "x 선언"
           }
         ]
       },
@@ -219,6 +214,11 @@ export const lambdaExceptionCatch2025_2: Problem = {
           }
         ],
         "relatedLines": [
+          {
+            "line": 10,
+            "role": "definition",
+            "label": "catch 정의"
+          },
           {
             "line": 17,
             "role": "read",
@@ -320,7 +320,19 @@ export const lambdaExceptionCatch2025_2: Problem = {
             }
           ],
           "arrows": []
-        }
+        },
+        "relatedLines": [
+          {
+            "line": 4,
+            "role": "call",
+            "label": "apply 호출"
+          },
+          {
+            "line": 17,
+            "role": "read",
+            "label": "f 선언"
+          }
+        ]
       },
       {
         "line": 24,
@@ -344,11 +356,6 @@ export const lambdaExceptionCatch2025_2: Problem = {
           }
         ],
         "relatedLines": [
-          {
-            "line": 4,
-            "role": "call",
-            "label": "apply 호출"
-          },
           {
             "line": 17,
             "role": "read",

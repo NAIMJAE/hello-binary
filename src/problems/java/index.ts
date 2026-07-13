@@ -1,5 +1,11 @@
 import type { Problem } from "@/types/problem";
+import { abstractTemplateCustom01 } from "./abstract-template-custom-01";
+import { binarySearchBlankCustom01 } from "./binary-search-blank-custom-01";
+import { ctorPolyFieldCustom01 } from "./ctor-poly-field-custom-01";
 import { enumValuesIndex2025_3 } from "./enum-values-index-2025-3";
+import { ifaceMultiPolyCustom01 } from "./iface-multi-poly-custom-01";
+import { overloadRecursiveCustom01 } from "./overload-recursive-custom-01";
+import { overrideStaticCastCustom01 } from "./override-static-cast-custom-01";
 import { genericOverloadPrint2024_3 } from "./generic-overload-print-2024-3";
 import { inheritanceFieldOverride2024_3 } from "./inheritance-field-override-2024-3";
 import { inheritanceConstructorOverride2025_1 } from "./inheritance-constructor-override-2025-1";
@@ -37,6 +43,12 @@ export const javaProblems: Problem[] = [
   staticOverridePolymorphism2025_2,
   objectArraySwap2025_2,
   stringEqualsArrayLoop2024_3,
+  overrideStaticCastCustom01,
+  ctorPolyFieldCustom01,
+  abstractTemplateCustom01,
+  ifaceMultiPolyCustom01,
+  overloadRecursiveCustom01,
+  binarySearchBlankCustom01,
 ];
 
 export const javaProblemsBySlug: Record<string, Problem> = Object.fromEntries(
